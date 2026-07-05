@@ -5,7 +5,7 @@ import { StyleSheet, Text, View, FlatList, TouchableOpacity, TextInput, Activity
   Platform,
   StatusBar} from "react-native";
 
-import { useFocusEffect, useRouter } from "expo-router";
+import { useFocusEffect, useRouter, Stack } from "expo-router";
 import { StorageHelper, Deck } from "@/utils/storage";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -81,6 +81,7 @@ export default function Index() {
 
   return (
     <SafeAreaView style={styles.safeArea}>
+      <Stack.Screen options={{ headerShown: false }} />
       <StatusBar barStyle="light-content" backgroundColor="#0F172A" />
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
