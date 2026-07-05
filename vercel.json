@@ -2,7 +2,6 @@
   "outputDirectory": "dist",
   "cleanUrls": true,
   "rewrites": [
-    { "handle": "filesystem" },
-    { "source": "/(.*)", "destination": "/index.html" }
+    { "source": "/((?!assets/|_expo/|.*\\..*$).*)", "destination": "/index.html" }
   ]
 }
