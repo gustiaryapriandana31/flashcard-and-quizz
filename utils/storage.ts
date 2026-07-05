@@ -218,4 +218,31 @@ export const StorageHelper = {
     return updated;
   },
 
+  // INTEGRASI DUMMYJSON: Import Kuis baru dari Quotes API DummyJSON
+  importFromDummyJSON: async (): Promise<Deck> => {
+    try {
+      const response = await fetch('https://dummyjson.com/quotes?limit=5');
+      const data = await response.json();
+
+      const newCards: Card[] = data.quotes.map((q: any) => ({
+        id: `dummy-${q.id}-${Date.now()}`,
+        question: `Siapa tokoh di balik kutipan berikut?\n\n"${q.quote}"`,
+        answer: q.author,
+        learned: false,
+      }));
+      const newDeck: Deck = {
+        id: `deck-dummy-${Date.now()}`,
+        title: 'Tebak Tokoh (DummyJSON Quotes)',
+        description: 'Mencocokkan kutipan terkenal dengan penulisnya yang diambil langsung dari DummyJSON.',
+        cards: newCards,
+        createdAt: new Date().toISOString(),
+      };
+      const decks = await StorageHelper.getDecks();
+      await StorageHelper.saveDecks([newDeck, ...decks]);
+      return newDeck;
+    } catch (e) {
+      console.error('Gagal mengimpor dari DummyJSON', e);
+      throw e;
+    }
+  },
 };
